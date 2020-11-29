@@ -9,7 +9,7 @@ namespace WindowsFormsApp2
 {
     public class Drinks
     {
-        public static Random rnd = new Random();
+        
         public int Volume = 0; // объем (общий у всех)
         public virtual String GetInfo()
         {
@@ -17,8 +17,13 @@ namespace WindowsFormsApp2
             str += String.Format("\nОбъем (литры): {0}", this.Volume);
             return str;
         }
+        public virtual string GetName() 
+        { 
+            return "\tЭто последний элемент"; 
+        }
+        public static Random rnd = new Random();
     }
-    public enum FruiteType { Apple, Apricot, Banana, Grapefruit, Mango };
+    public enum FruiteType { Apple, Apricot, Banana, Grapefruit, Mango };//фрукты
     public class Juice : Drinks
     {
 
@@ -40,6 +45,11 @@ namespace WindowsFormsApp2
                 type = (FruiteType)rnd.Next(5), // рандомный фрукт
                 WithPulp = rnd.Next() % 2 == 0 // наличие мякоти
             };
+           
+    }
+        public override string GetName()
+        {
+            return "\tСок";
         }
     }
 
@@ -48,13 +58,13 @@ namespace WindowsFormsApp2
     {
 
         public int Fortress = 0; // крепость
-        public AlcoholType type = AlcoholType.Strong; // тип
+        public AlcoholType type = AlcoholType.Strong; // тип алкоголя
         public override String GetInfo()
         {
             var str = "Алкоголь-";
-            str += base.GetInfo();
-            str += String.Format("\nКрепость %: {0}", this.Fortress);
-            str += String.Format("\nТип: {0}", this.type);
+            str += base.GetInfo();// объем
+            str += String.Format("\nКрепость %: {0}", this.Fortress);// крепость
+            str += String.Format("\nТип: {0}", this.type);// тип алкоголя
             return str;
         }
         public static Alcohol Generate()
@@ -65,6 +75,7 @@ namespace WindowsFormsApp2
                 type = (AlcoholType)rnd.Next(2),
                 Fortress = 5
             };
+            // вывод типа алкоголя, согласно напитку (если Lite, то от 3 до 10 )
             if (test.type == AlcoholType.Strong)
             {
                 test.Fortress = rnd.Next(30, 41);
@@ -74,6 +85,10 @@ namespace WindowsFormsApp2
                 test.Fortress = rnd.Next(3, 10);
             }
             return test;
+        }
+        public override string GetName() 
+        { 
+            return "\tАлкоголь"; 
         }
     }
         public enum SodaType { Fanta, Sprite, CocaCola, SevenUp };
@@ -94,11 +109,15 @@ namespace WindowsFormsApp2
             {
                 return new Soda
                 {
-                    Volume = 1 + rnd.Next(5), // спелость от 0 до 100
-                    BubblesNumber = 5 + rnd.Next() % 20, // количество долек от 5 до 25
-                    type = (SodaType)rnd.Next(4)
+                    Volume = 1 + rnd.Next(5), // объем
+                    BubblesNumber = 5 + rnd.Next() % 20, // количество пузырьков
+                    type = (SodaType)rnd.Next(4)//вид напитка
                 };
             }
+        public override string GetName() 
+        { 
+            return "\tГазировка"; 
         }
+    }
     }
 
